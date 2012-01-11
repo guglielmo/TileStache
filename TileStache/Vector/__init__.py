@@ -465,12 +465,18 @@ def _get_features(coord, properties, projection, layer, clipped, projected, spac
         # BUG: if geometry contains polygons, simplify can 
         # lead to artifacts when tolerance is high
         if simplify is not None and geometry:
+            import logging
+            logger = logging.getLogger('django')
             # Calculates the tile resolution in degrees 
-            xmin, ymin, xmax, ymax = bbox.GetEnvelope()
+            xmin, xmax, ymin, ymax = bbox.GetEnvelope()
             xspan, yspan = xmax - xmin, ymax - ymin
+            logger.debug('TileStache xspan %s yspan %s' % (xspan, yspan))
             # x and y axis average
             tolerance = float(simplify) * ((abs(xspan) + abs(yspan)) / 1024)
+            logger.debug('TileStache tolerance : %s' % tolerance)
+            num_ori = geometry.ExportToWkt().count('.')
             geometry = geometry.Simplify(tolerance)
+            logger.debug('TileStache simplify : %s' % (100.0 *(num_ori - geometry.ExportToWkt().count('.'))/ num_ori ))
 
         if geometry is None:
             # may indicate a TopologyException
