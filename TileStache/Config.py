@@ -371,8 +371,9 @@ def _parseConfigfileLayer(layer_dict, config, dirpath):
         elif _class is Providers.Vector.Provider:
             provider_kwargs['driver'] = provider_dict['driver']
             provider_kwargs['parameters'] = provider_dict['parameters']
-            provider_kwargs['properties'] = provider_dict.get('properties', None)
             provider_kwargs['projected'] = bool(provider_dict.get('projected', False))
+            provider_kwargs['properties'] = provider_dict.get('properties', None)
+            provider_kwargs['simplify'] = provider_dict.get('simplify', None)
             provider_kwargs['verbose'] = bool(provider_dict.get('verbose', False))
             
             if 'spacing' in provider_dict:
@@ -384,6 +385,7 @@ def _parseConfigfileLayer(layer_dict, config, dirpath):
                 provider_kwargs['clipped'] = 'padded'
             else:
                 provider_kwargs['clipped'] = bool(provider_dict.get('clipped', True))
+
         
         elif _class is Providers.MBTiles.Provider:
             provider_kwargs['tileset'] = provider_dict['tileset']
