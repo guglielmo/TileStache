@@ -474,7 +474,7 @@ def _get_features(coord, properties, projection, layer, clipped, projected, spac
             import logging
             logger = logging.getLogger('django')
             tolerance = float(simplify) * abs(bbox.GetEnvelope()[1]) / 256
-            logger.debug("TileStache Vector simplify by %s" % tolerance
+            logger.debug("TileStache Vector simplify by %s" % tolerance)
             geometry = geometry.Simplify(tolerance)
 
 
