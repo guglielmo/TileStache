@@ -475,7 +475,7 @@ def _get_features(coord, properties, projection, layer, clipped, projected, spac
             tolerance = float(simplify) * ((abs(xspan) + abs(yspan)) / 1024)
             logger.debug('TileStache tolerance : %s' % tolerance)
             num_ori = geometry.ExportToWkt().count('.')
-            geometry = geometry.Simplify(tolerance)
+            geometry = geometry.SimplifyPreserveTopology(tolerance)
             logger.debug('TileStache simplify : %s' % (100.0 *(num_ori - geometry.ExportToWkt().count('.'))/ num_ori ))
 
         if geometry is None:
